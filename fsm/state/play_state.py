@@ -1,5 +1,8 @@
-from fsm.fsm import FSM
+from fsm.fsm import FSM, FsmState
 
 
-class PlayState(FSM):
-    pass
+# 运行状态
+class PlayingState(FSM):
+
+    def __init__(self, screen, ai_controller, state=FsmState.Playing):
+        super().__init__(screen, ai_controller, state)
