@@ -35,12 +35,17 @@
 - `pygame.display.set_palette` — 为索引显示设置显示调色板
 
 # display模块介绍
-这个模块提供了对pygame 显示界面的控制。Pygame的 Surface 对象即可显示为一个窗口，可以包含在窗口中，也可以全屏运行。当你创建并显示一个常规的 Surface 对象后，屏幕上无法立即看到更改;您必须从两个翻转（flipping）函数中选择一个来更新实际改动后得到画面。
-显示（display）的原点（x = 0和y = 0）位于屏幕的左上角。两个轴都朝向屏幕的右下方正向增加。
+这个模块提供了对pygame 显示界面的控制。Pygame的 Surface 对象即可显示为一个窗口，可以包含在窗口中，也可以全屏运行。当你创建并显示一个常规的 Surface 对象后，屏幕上无法立即看到更改;您必须从两个翻转（flipping）函数中选择一个来更新实际改动后得到画面。     
+
+显示（display）的原点（x = 0和y = 0）位于屏幕的左上角。两个轴都朝向屏幕的右下方正向增加。     
 Pygame的 display实际上可以有几种初始化的方式。默认情况下，display作为一个软件驱动的帧缓冲区。除此之外，您可以请求硬件加速和OpenGL支持等特殊模块。这些由传递给pygame.display.set_mode()的属性(flags)控制。
-Pygame在任何时候都只能激活一个显示界面。使用pygame.display.set_mode()创建一个新的将关闭之前的显示界面。如果需要对像素格式或显示分辨率进行精确控制，请使用函数pygame.display.mode_ok()，pygame.display.list_modes()和 pygame.display.Info()来查询有关显示界面的信息。
+Pygame在任何时候都只能激活一个显示界面。使用pygame.display.set_mode()创建一个新的将关闭之前的显示界面。     
+
+如果需要对像素格式或显示分辨率进行精确控制，请使用函数pygame.display.mode_ok()，pygame.display.list_modes()和 pygame.display.Info()来查询有关显示界面的信息。
 一旦 Surface 对象的显示界面被创建出来，此模块中的函数将影响单个现有显示界面。如果模块未初始化，则Surface将变为无效。如果设置了新的显示模式，现有的Surface对象将自动切换到新的显示界面上。
-当设置显示模式后，pygame事件队列（event queue）中会放置几个相关事件。当用户请求程序关闭时发送pygame.QUIT事件。当显示界面获得并失去输入焦点时，窗口将接收pygame.ACTIVEEVENT事件。如果使用pygame.RESIZABLE属性（flags）设置显示界面，则在用户调整窗口尺寸时将发送pygame.VIDEORESIZE事件。硬件显示指当接收到 pygame.VIDEOEXPOSE事件时，将部分需要被重绘的窗口直接绘制到屏幕上。
+当设置显示模式后，pygame事件队列（event queue）中会放置几个相关事件。当用户请求程序关闭时发送pygame.QUIT事件。当显示界面获得并失去输入焦点时，窗口将接收pygame.ACTIVEEVENT事件。     
+
+如果使用pygame.RESIZABLE属性（flags）设置显示界面，则在用户调整窗口尺寸时将发送pygame.VIDEORESIZE事件。硬件显示指当接收到 pygame.VIDEOEXPOSE事件时，将部分需要被重绘的窗口直接绘制到屏幕上。
 某些显示环境具有自动拉伸（automatically stretching）所有窗口的选项。当启用此选项后，此自动拉伸会扭曲pygame窗口的外观。在pygame的例子目录中，有一个示例代码（prevent_display_stretching.py），它显示了如何在微软系统（Vista 以上系统）中关闭 Pygame 显示的自动拉伸属性。
  
 
