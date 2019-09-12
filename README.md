@@ -34,6 +34,7 @@
 - `pygame.display.get_caption` — 获取当前窗口标题
 - `pygame.display.set_palette` — 为索引显示设置显示调色板
 
+# display模块介绍
 这个模块提供了对pygame 显示界面的控制。Pygame的 Surface 对象即可显示为一个窗口，可以包含在窗口中，也可以全屏运行。当你创建并显示一个常规的 Surface 对象后，屏幕上无法立即看到更改;您必须从两个翻转（flipping）函数中选择一个来更新实际改动后得到画面。
 显示（display）的原点（x = 0和y = 0）位于屏幕的左上角。两个轴都朝向屏幕的右下方正向增加。
 Pygame的 display实际上可以有几种初始化的方式。默认情况下，display作为一个软件驱动的帧缓冲区。除此之外，您可以请求硬件加速和OpenGL支持等特殊模块。这些由传递给pygame.display.set_mode()的属性(flags)控制。
