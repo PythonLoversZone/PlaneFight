@@ -18,29 +18,33 @@ logger = logging.getLogger(__name__)
 
 class FSMMachine(FSMState):
     states: List[FSMState] = []
-    state: FSMStateEnum = None
-    default_state: FSMStateEnum = None
+    state: FSMState = None
+    default_state: FSMState = None
 
     # screen用来更新画面,ai_controller控制画面, state用来告诉ai_controller该用什么状态
-    def __init__(self, screen, ai_controller, state=FSMStateEnum.Idle):
-        super().__init__(screen, ai_controller, state)
+    def __init__(self, screen, ai_controller):
+        super().__init__(screen, ai_controller)
         self.screen = screen
         self.controller = ai_controller
         # 添加状态
-        self.add_state(IdleState(screen, ai_controller))
-        self.add_state(PlayingState(screen, ai_controller))
-        self.add_state(PauseState(screen, ai_controller))
-        self.add_state(EndState(screen, ai_controller))
+        idle_state = IdleState(screen, ai_controller)
+        self.add_state(idle_state)
+        playing_state = PlayingState(screen, ai_controller)
+        self.add_state(playing_state)
+        pause_state = PauseState(screen, ai_controller)
+        self.add_state(pause_state)
+        end_state = EndState(screen, ai_controller)
+        self.add_state(end_state)
 
         # 设置默认状态
-        self.current_state = state
+        self.current_state = idle_state
 
     # 获取当前状态
     def get_current_state(self):
         return self.current_state
 
     # 添加状态
-    def add_state(self, state):
+    def add_state(self, state: FSMState):
         self.states.append(state)
 
     # 销毁对象
@@ -49,8 +53,12 @@ class FSMMachine(FSMState):
 
     def trans_state(self, goal_state: FSMStateEnum):
         for state in self.states:
-            if state.state == goal_state:
-                self.current_state = state.state
+            if state.type() == goal_state:
+                # 退出老的状态
+                self.current_state.exit()
+                self.current_state = state
+                # 进入新的状态
+                self.current_state.enter()
 
     # 退出游戏
     @staticmethod
@@ -89,3 +97,5 @@ class FSMMachine(FSMState):
             if e.type == GameEvent.move_right:
                 if self.current_state == FSMStateEnum.Playing:
                     self.move_right()
+
+            self.current_state.update_view()
