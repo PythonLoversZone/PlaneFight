@@ -163,9 +163,19 @@ pygame.display.gl_set_attribute
 gl_set_attribute(flag, value) -> None     
 当使用pygame.OPENGL标志调用pygame.display.set_mode()时，Pygame会自动处理设置OpenGL属性，如颜色和双缓冲区。 OpenGL提供了一些您可能想要控制的其他属性。 将其中一个属性作为标志及其适当的值传递。 这必须在pygame.display.set_mode()之前调用
 这些OPENGL标志是：
-GL_ALPHA_SIZE, GL_DEPTH_SIZE, GL_STENCIL_SIZE, GL_ACCUM_RED_SIZE,
-GL_ACCUM_GREEN_SIZE, GL_ACCUM_BLUE_SIZE, GL_ACCUM_ALPHA_SIZE,
-GL_MULTISAMPLEBUFFERS, GL_MULTISAMPLESAMPLES, GL_STEREO
+
+```
+GL_ALPHA_SIZE,
+GL_DEPTH_SIZE,
+GL_STENCIL_SIZE,
+GL_ACCUM_RED_SIZE,
+GL_ACCUM_GREEN_SIZE, 
+GL_ACCUM_BLUE_SIZE, 
+GL_ACCUM_ALPHA_SIZE,
+GL_MULTISAMPLEBUFFERS,
+GL_MULTISAMPLESAMPLES,
+GL_STEREO
+```
 
 ### 当display在显示中处于活跃状态时返回True
 pygame.display.get_active           
