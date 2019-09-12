@@ -25,6 +25,11 @@ class FSMState:
 
     controller: AIController = None
 
+    def __init__(self, screen, ai_controller, state) -> None:
+        self.state = state
+        self.screen = screen
+        self.controller = ai_controller
+
     # 销毁对象
     def destroy(self):
         pass
