@@ -1,35 +1,53 @@
+# encoding=utf-8
+import logging
 import sys
+
 import pygame
+from pygame import event
 
-pygame.init()
+from config.game_config import GameConfig, Colors
 
-red = (255, 0, 0)
-white = (255, 255, 255)
-black = (0, 0, 0)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
-pygame.display.set_caption("slither game")
-game_display = pygame.display.set_mode((500, 400))
-game_display.fill(white)
 
-clock = pygame.time.Clock()
+def start_game():
+    while True:
+        for e in event.get():
+            "用户按下了关闭游戏的按钮"
+            if e.type == pygame.QUIT:
+                exit_game()
+            "用户按键操作"
+            if e.type == pygame.KEYDOWN:
+                handler()
 
-box_x = 300
-box_y = 300
 
-game_exit = False
+# 事件处理
+def handler():
+    if event.key == pygame.K_a:
+        logger.info('pressed a ')
+    elif event.key == pygame.K_d:
+        logger.info('pressed d ')
 
-while not game_exit:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            game_exit = True
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                box_x -= 25
-            elif event.key == pygame.K_RIGHT:
-                box_x += 25
-    pygame.draw.rect(game_display, black, [box_x, box_y, 25, 25])
+
+# 退出游戏
+def exit_game():
+    pygame.quit()
+    sys.exit()
+
+
+# 初始化游戏界面
+def init_game():
+    pygame.init()
+    pygame.display.set_caption("plane fight")
+    clock = pygame.time.Clock()
+    clock.tick(GameConfig.fps)
+    game_display = pygame.display.set_mode(GameConfig.screen.size)
+    pygame.draw.rect(game_display, Colors.black, GameConfig.screen)
     pygame.display.update()
-    clock.tick(60)
 
-pygame.quit()
-sys.exit()
+
+# 程序入口
+if __name__ == "__main__":
+    init_game()
+    start_game()
