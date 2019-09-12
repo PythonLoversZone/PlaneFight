@@ -1,42 +1,20 @@
 # encoding=utf-8
 import logging
-import sys
 
 import pygame
-from pygame import event
 
 from config.game_config import GameConfig
 from fsm.ai.idle_ai import IdleAI
-from fsm.fsm import FSM
+from fsm.fsm_machine import FSMMachine
+from game_event.game_event import GameEvent
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 
-def start_game(fsm):
+def start_game(fsm: FSMMachine):
     while True:
         fsm.update()
-        for e in event.get():
-            "用户按下了关闭游戏的按钮"
-            if e.type == pygame.QUIT:
-                exit_game()
-            "用户按键操作"
-            if e.type == pygame.KEYDOWN:
-                handler()
-
-
-# 事件处理
-def handler():
-    if event.key == pygame.K_a:
-        logger.info('pressed a ')
-    elif event.key == pygame.K_d:
-        logger.info('pressed d ')
-
-
-# 退出游戏
-def exit_game():
-    pygame.quit()
-    sys.exit()
 
 
 # 初始化游戏界面
@@ -46,7 +24,15 @@ def init_game():
     clock = pygame.time.Clock()
     clock.tick(GameConfig.fps)
     game_display = pygame.display.set_mode(GameConfig.screen.size)
-    return FSM(game_display, IdleAI)
+
+    # 注册用户自定义事件
+    pygame.time.set_timer(GameEvent.hurt, GameConfig.fps)
+    pygame.time.set_timer(GameEvent.attack, GameConfig.fps)
+    pygame.time.set_timer(GameEvent.end, GameConfig.fps)
+    pygame.time.set_timer(GameEvent.idle, GameConfig.fps)
+    pygame.time.set_timer(GameEvent.start_game, GameConfig.fps)
+
+    return FSMMachine(game_display, IdleAI())
 
 
 # 程序入口

@@ -4,6 +4,11 @@
 # 安装依赖
 `pip install -r requirements.txt`
 
+# 游戏实现逻辑
+1. `init_game()` 初始化一个带有screen,state和ai控制器的状态机,这里要设置screen的大小和fps刷新率
+2. `start_game(fsm)` 开始游戏时把这个状态机放在游戏循环中不停的执行
+3. ``
+
 # 关键API
 - `pygame.display.init` — 初始化display模块
 - `pygame.display.quit` — 取消初始化display模块

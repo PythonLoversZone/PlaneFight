@@ -4,8 +4,6 @@ from pygame.sprite import Sprite
 
 
 class GameObject(Sprite):
-    pass
 
-
-def __init__():
-    super().__init__()
+    def __init__(self, image):
+        super().__init__()
