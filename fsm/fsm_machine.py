@@ -73,13 +73,6 @@ class FSMMachine(FSMState):
             # 退出游戏检测
             if e.type == GameEvent.quit:
                 self.exit_game()
-            # 以下为玩家按键操作检测
-            if e.type == GameEvent.move_left:
-                if self.current_state == FSMStateEnum.Playing:
-                    self.move_left()
-            if e.type == GameEvent.move_right:
-                if self.current_state == FSMStateEnum.Playing:
-                    self.move_right()
             # 以下为UI状态转换
             if e.type == GameEvent.start_game:
                 self.trans_state(FSMStateEnum.Playing)
@@ -89,3 +82,10 @@ class FSMMachine(FSMState):
                 self.trans_state(FSMStateEnum.End)
             if e.type == GameEvent.idle:
                 self.trans_state(FSMStateEnum.Idle)
+            # 以下为玩家按键操作检测
+            if e.type == GameEvent.move_left:
+                if self.current_state == FSMStateEnum.Playing:
+                    self.move_left()
+            if e.type == GameEvent.move_right:
+                if self.current_state == FSMStateEnum.Playing:
+                    self.move_right()
