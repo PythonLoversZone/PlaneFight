@@ -72,18 +72,18 @@ pygame.display.set_mode
 set_mode(resolution=(0,0), flags=0, depth=0) -> Surface     
 （resolution -> 分辨率）    
 这个函数将创建一个Surface对象。传入的参数是对显示类型的请求。实际创建的显示将是系统支持的最佳匹配。resolution参数是一对表示宽度和高度的数字。flags参数是其他选项的集合。depth参数表示用于颜色的位数。返回的Surface对象可以像常规Surface对象一样绘制，但发生的改变最终会显示到屏幕上。如果没有传递分辨率或设置为（0,0）并且pygame使用SDL版本1.2.10或更高版本，则创建的Surface将具有与当前屏幕分辨率相同的大小。如果仅将宽度或高度设置为0，则Surface对象将具有与屏幕分辨率相同的宽度或高度。使用1.2.10之前的SDL版本将引发异常。通常最好不要传递深度（depth）参数。它将默认为系统的最佳和最快颜色深度。如果您的游戏需要特定的颜色格式，您可以使用此参数控制深度。 Pygame 将为模拟一个非现成的颜色深度而耗费更多的时间。请求全屏显示模式时，有时无法完全匹配所请求的分辨率。在这些情况下，pygame将选择最接近的兼容匹配。返回的surface仍将始终与请求的分辨率匹配。flags参数控制您想要的显示类型。有几种可供选择，您甚至可以使用按位或运算符（管道“|”字符）组合多种类型。如果传递0或没有flags参数，它将默认为软件驱动的窗口。以下是您要选择的显示标志：
-`pygame.FULLSCREEN`创建一个全屏显示
-`pygame.DOUBLEBUF` 1.双缓冲模式 2.推荐和`HWSURFACE`或`OPENGL`一起使用
-`pygame.HWSURFACE`硬件加速，仅在FULLSCREEN下可以使用
-`pygame.OPENGL`创建一个OpenGL可渲染的显示器
-`pygame.RESIZABLE`创建一个可调整尺寸的窗口
-`pygame.NOFRAME`创建一个没有边框和控制按钮的窗口
+`pygame.FULLSCREEN`创建一个全屏显示     
+`pygame.DOUBLEBUF` 1.双缓冲模式 2.推荐和`HWSURFACE`或`OPENGL`一起使用      
+`pygame.HWSURFACE`硬件加速，仅在FULLSCREEN下可以使用     
+`pygame.OPENGL`创建一个OpenGL可渲染的显示器     
+`pygame.RESIZABLE`创建一个可调整尺寸的窗口     
+`pygame.NOFRAME`创建一个没有边框和控制按钮的窗口     
 
 例如：
-在屏幕中创建一个 700 * 400 的窗口
-screen_width=700
-screen_height=400
-screen=pygame.display.set_mode([screen_width,screen_height])
+在屏幕中创建一个 700 * 400 的窗口     
+screen_width=700      
+screen_height=400     
+screen=pygame.display.set_mode([screen_width,screen_height])     
 
 ### 获取当前显示的 Surface 对象。
 pygame.display.get_surface           
