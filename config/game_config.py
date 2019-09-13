@@ -22,8 +22,10 @@ class Colors:
 
 class Resource:
     player = 'images/me1.png'
+    start_game = 'images/game_start.png'
+    restart_game = 'images/game_restart.png'
+    gameOver = 'images/gameover.png'
     enemy1 = 'images/enemy1.png'
     enemy2 = 'images/enemy2.png'
     background = 'images/background.png'
-    gameOver = 'images/gameover.png'
     bullet = 'images/bullet'

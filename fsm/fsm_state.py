@@ -47,5 +47,7 @@ class FSMState:
 
     # 更新
     def update_view(self):
-        pass
+        # 更新背景组精灵
+        self.back_group.update()
+        self.back_group.draw(self.screen)
 # ------------------------------以上方法需要子类实现------------------------------------
