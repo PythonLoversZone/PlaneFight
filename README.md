@@ -7,7 +7,11 @@
 ### 游戏实现逻辑
 1. `init_game()` 初始化一个带有screen,state和ai控制器的状态机,这里要设置screen的大小和fps刷新率
 2. `start_game(fsm)` 开始游戏时把这个状态机放在游戏循环中不停的执行
-3. ``
+
+### 踩坑记录
+1. 想要在screen上显示画面必须在游戏循环中调用`pygame.display.update()`
+2. 使用单个的image而不使用精灵组的话需要在游戏循环外调用`pygame.image.load('path') `,在游戏循环内调用 `self.screen.blit(self.start_button, (x, y))`,然后在游戏循环中调用`pygame.display.flip()`
+        
 
 ### 关键API
 - `pygame.display.init` — 初始化display模块

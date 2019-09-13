@@ -11,6 +11,7 @@ from fsm.state.idle_state import IdleState
 from fsm.state.pause_state import PauseState
 from fsm.state.play_state import PlayingState
 from game_event.game_event import GameEvent
+from model.ui.button import ClickType
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -63,10 +64,6 @@ class FSMMachine:
         self.states.clear()
         logger.info('destroy....')
 
-    # 检测状态变化
-    def check_trans_state(self):
-        pass
-
     # 状态转换
     def trans_state(self, goal_state: FSMStateEnum):
         # 如果在状态列表中找到了目标状态,并且当前状态不是目标状态则进入该状态
@@ -74,7 +71,7 @@ class FSMMachine:
             # 状态相同就不需要切换
             if self.state.type() == goal_state:
                 return
-            logger.info('状态切换为%d' % goal_state)
+            logger.info('状态切换为: %s' % goal_state)
             self.set_state(goal_state)
 
     # 退出游戏
@@ -94,8 +91,6 @@ class FSMMachine:
 
     # 每秒60(fps)次监听玩家的动作,不同的动作转入不同的状态中去,具体的逻辑在各自的状态中处理
     def update_machine(self):
-        # 不停的检测状态是否有变化
-        self.check_trans_state()
         # 检测事件
         self.event_handler()
         # 更新精录
@@ -119,3 +114,7 @@ class FSMMachine:
                 if self.state.type() == FSMStateEnum.Playing:
                     logger.info('右移.........')
                     self.move_right()
+            if e.type == GameEvent.click:
+                if self.state.start_button.click(e, ClickType.left_click):
+                    logger.info('玩家开始了游戏....')
+                    self.trans_state(FSMStateEnum.Playing)

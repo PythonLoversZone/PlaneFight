@@ -1,4 +1,5 @@
 """游戏配置"""
+import pygame
 from pygame.rect import Rect
 
 
@@ -29,3 +30,7 @@ class Resource:
     enemy2 = 'images/enemy2.png'
     background = 'images/background.png'
     bullet = 'images/bullet'
+
+    @staticmethod
+    def create_image(image):
+        return pygame.image.load(image).convert()

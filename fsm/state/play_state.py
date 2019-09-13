@@ -31,7 +31,6 @@ class PlayingState(FSMState):
         super().exit()
 
     def update_view(self):
-        logger.info('更新play状态...')
         super().update_view()
         self.player_group.update()
         self.player_group.draw(self.screen)

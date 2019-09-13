@@ -21,7 +21,6 @@ class EndState(FSMState):
         super().exit()
 
     def update_view(self):
-        logger.info('更新end视图.........')
         super().update_view()
 
     def type(self):

@@ -21,7 +21,6 @@ class PauseState(FSMState):
         super().exit()
 
     def update_view(self):
-        logger.info('更新pause状态...')
         super().update_view()
 
     def type(self):

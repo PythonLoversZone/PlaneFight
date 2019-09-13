@@ -14,3 +14,4 @@ class GameEvent:
     move_left = pygame.K_a
     move_right = pygame.K_d
     quit = pygame.QUIT
+    click = pygame.MOUSEBUTTONDOWN

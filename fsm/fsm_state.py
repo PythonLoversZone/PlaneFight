@@ -6,6 +6,7 @@ from pygame.surface import Surface
 from fsm.ai_controller import AIController
 # 状态枚举
 from model.ui.background import Background
+from model.ui.button import Button
 
 
 class FSMStateEnum(Enum):
@@ -22,6 +23,8 @@ class FSMState:
 
     # 背景精灵组
     back_group = None
+
+    start_button: Button = None
 
     def __init__(self, screen, ai_controller) -> None:
         self.screen = screen

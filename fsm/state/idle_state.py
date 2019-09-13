@@ -2,17 +2,17 @@ import logging
 
 import pygame
 
+from config.game_config import Resource
+from config.game_util import GameUtil
 from fsm.fsm_state import FSMStateEnum, FSMState
 # 初始状态 仅一个背景和一个开始按钮
-from model.ui.start_button import StartButton
+from model.ui.button import Button
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 
 class IdleState(FSMState):
-    # 按钮精灵组
-    button_group = None
 
     def __init__(self, screen, ai_controller):
         super().__init__(screen, ai_controller)
@@ -20,9 +20,10 @@ class IdleState(FSMState):
     def enter(self):
         logger.info('进入idle状态...')
         super().enter()
-        start_button = StartButton()
-        self.button_group = pygame.sprite.Group(start_button)
-        # 在最中间画一个按钮
+        # 画一个按钮
+        surface_image = Resource.create_image(Resource.start_game)
+        position = GameUtil.get_center_position(surface_image)
+        self.start_button = Button(surface_image, position)
 
     def exit(self):
         logger.info('退出idle状态...')
@@ -32,7 +33,9 @@ class IdleState(FSMState):
         return FSMStateEnum.Idle
 
     def update_view(self):
-        logger.info('更新idle视图......')
         super().update_view()
-        self.button_group.update()
-        self.button_group.draw(self.screen)
+        # 放到正中间
+        position = (self.start_button.rect.x, self.start_button.rect.y)
+        self.screen.blit(self.start_button.image, position)
+        # 刷新
+        pygame.display.flip()
