@@ -1,6 +1,6 @@
 import logging
 import sys
-from typing import List
+from typing import Dict
 
 import pygame
 from pygame import event
@@ -16,14 +16,12 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 
-class FSMMachine(FSMState):
-    states: List[FSMState] = []
+class FSMMachine:
+    states: Dict[FSMStateEnum, FSMState] = {}
     state: FSMState = None
-    default_state: FSMState = None
 
     # screen用来更新画面,ai_controller控制画面, state用来告诉ai_controller该用什么状态
     def __init__(self, screen, ai_controller):
-        super().__init__(screen, ai_controller)
         self.screen = screen
         self.controller = ai_controller
         # 添加状态
@@ -36,29 +34,47 @@ class FSMMachine(FSMState):
         end_state = EndState(screen, ai_controller)
         self.add_state(end_state)
 
-        # 设置默认状态
-        self.current_state = idle_state
+        # 初始化状态
+        self.set_state(FSMStateEnum.Idle)
 
     # 获取当前状态
-    def get_current_state(self):
-        return self.current_state
+    def get_state(self):
+        return self.state
+
+    # 获取当前状态
+    def set_state(self, state: FSMStateEnum):
+        # 退出老的状态
+        if self.state is not None:
+            self.state.exit()
+        # 设置新的状态
+        self.state = self.states[state]
+        # 进入新的状态
+        self.state.enter()
 
     # 添加状态
     def add_state(self, state: FSMState):
-        self.states.append(state)
+        key = state.type()
+        self.states[key] = state
 
     # 销毁对象
     def destroy(self):
         self.states.clear()
 
+    # 检测状态变化
+    def check_trans_state(self):
+        pass
+
+    # 状态转换
     def trans_state(self, goal_state: FSMStateEnum):
-        for state in self.states:
-            if state.type() == goal_state:
-                # 退出老的状态
-                self.current_state.exit()
-                self.current_state = state
-                # 进入新的状态
-                self.current_state.enter()
+        # 如果在状态列表中找到了目标状态,并且当前状态不是目标状态则进入该状态
+        if self.states.__contains__(goal_state):
+            if self.state is None:
+                self.set_state(goal_state)
+                return
+            # 状态相同就不需要切换
+            if self.state.type() == goal_state:
+                return
+            self.set_state(goal_state)
 
     # 退出游戏
     @staticmethod
@@ -81,21 +97,15 @@ class FSMMachine(FSMState):
             # 退出游戏检测
             if e.type == GameEvent.quit:
                 self.exit_game()
-            # 以下为UI状态转换
-            if e.type == GameEvent.start_game:
-                self.trans_state(FSMStateEnum.Playing)
-            if e.type == GameEvent.pause_game:
-                self.trans_state(FSMStateEnum.Pause)
-            if e.type == GameEvent.end:
-                self.trans_state(FSMStateEnum.End)
-            if e.type == GameEvent.idle:
-                self.trans_state(FSMStateEnum.Idle)
             # 以下为玩家按键操作检测
             if e.type == GameEvent.move_left:
-                if self.current_state == FSMStateEnum.Playing:
+                if self.state.type() == FSMStateEnum.Playing:
                     self.move_left()
             if e.type == GameEvent.move_right:
-                if self.current_state == FSMStateEnum.Playing:
+                if self.state.type() == FSMStateEnum.Playing:
                     self.move_right()
 
-            self.current_state.update_view()
+            # 不停的检测状态是否有变化
+            self.check_trans_state()
+            # 更新UI
+            self.state.update_view()

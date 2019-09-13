@@ -28,9 +28,9 @@ def init_game():
     # 注册用户自定义事件
     pygame.time.set_timer(GameEvent.hurt, GameConfig.fps)
     pygame.time.set_timer(GameEvent.attack, GameConfig.fps)
-    pygame.time.set_timer(GameEvent.end, GameConfig.fps)
-    pygame.time.set_timer(GameEvent.idle, GameConfig.fps)
-    pygame.time.set_timer(GameEvent.start_game, GameConfig.fps)
+    # pygame.time.set_timer(GameEvent.end, GameConfig.fps)
+    # pygame.time.set_timer(GameEvent.idle, GameConfig.fps)
+    # pygame.time.set_timer(GameEvent.start_game, GameConfig.fps)
 
     return FSMMachine(game_display, IdleAI())
 

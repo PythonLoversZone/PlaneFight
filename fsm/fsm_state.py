@@ -1,5 +1,6 @@
 from enum import Enum
 
+import pygame
 from pygame.surface import Surface
 
 from fsm.ai_controller import AIController
@@ -19,9 +20,23 @@ class FSMState:
 
     controller: AIController = None
 
+    # 背景精灵组
+    back_group = None
+
     def __init__(self, screen, ai_controller) -> None:
         self.screen = screen
         self.controller = ai_controller
+
+    # 进入当前状态,创建背景
+    def enter(self):
+        bg1 = Background()
+        bg2 = Background(True)
+        self.back_group = pygame.sprite.Group(bg1, bg2)
+
+    # ------------------------------以下方法需要子类实现------------------------------------
+    # 退出当前状态
+    def exit(self):
+        pass
 
     def type(self):
         pass
@@ -30,16 +45,7 @@ class FSMState:
     def destroy(self):
         pass
 
-    # 更新界面
+    # 更新
     def update_view(self):
-        pass
-
-    # ------------------------------以下方法需要子类实现------------------------------------
-    # 退出当前状态
-    def exit(self):
-        pass
-
-    # 进入当前状态,创建背景
-    def enter(self):
         pass
 # ------------------------------以上方法需要子类实现------------------------------------

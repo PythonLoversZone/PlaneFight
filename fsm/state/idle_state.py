@@ -14,4 +14,6 @@ class IdleState(FSMState):
         return FSMStateEnum.Idle
 
     def update_view(self):
-        pass
+        super().update_view()
+        self.back_group.update()
+        self.back_group.draw(self.screen)
