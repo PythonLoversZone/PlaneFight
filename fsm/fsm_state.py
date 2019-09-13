@@ -33,6 +33,12 @@ class FSMState:
         bg2 = Background(True)
         self.back_group = pygame.sprite.Group(bg1, bg2)
 
+    # 更新
+    def update_view(self):
+        # 更新背景组精灵
+        self.back_group.update()
+        self.back_group.draw(self.screen)
+
     # ------------------------------以下方法需要子类实现------------------------------------
     # 退出当前状态
     def exit(self):
@@ -44,10 +50,4 @@ class FSMState:
     # 销毁对象
     def destroy(self):
         pass
-
-    # 更新
-    def update_view(self):
-        # 更新背景组精灵
-        self.back_group.update()
-        self.back_group.draw(self.screen)
 # ------------------------------以上方法需要子类实现------------------------------------
