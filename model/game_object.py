@@ -14,5 +14,4 @@ class GameObject(Sprite):
         self.speed = speed
 
     def update(self):
-        super().update()
         self.rect.y += self.speed

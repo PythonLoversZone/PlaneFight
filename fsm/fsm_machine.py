@@ -22,6 +22,7 @@ class FSMMachine:
 
     # screen用来更新画面,ai_controller控制画面, state用来告诉ai_controller该用什么状态
     def __init__(self, screen, ai_controller):
+        logger.info('初始化状态机....')
         self.screen = screen
         self.controller = ai_controller
         # 添加状态
@@ -35,6 +36,7 @@ class FSMMachine:
         self.add_state(end_state)
 
         # 初始化状态
+        logger.info('设置默认状态为idle....')
         self.set_state(FSMStateEnum.Idle)
 
     # 获取当前状态
@@ -59,6 +61,7 @@ class FSMMachine:
     # 销毁对象
     def destroy(self):
         self.states.clear()
+        logger.info('destroy....')
 
     # 检测状态变化
     def check_trans_state(self):
@@ -92,20 +95,23 @@ class FSMMachine:
         logger.info('pressed a ')
 
     # 每秒60(fps)次监听玩家的动作,不同的动作转入不同的状态中去,具体的逻辑在各自的状态中处理
-    def update(self):
+    def update_machine(self):
+        # 不停的检测状态是否有变化
+        self.check_trans_state()
+        # 更新UI
+        self.state.update_view()
+
         for e in event.get():
             # 退出游戏检测
             if e.type == GameEvent.quit:
                 self.exit_game()
+                logger.info('关闭游戏.........')
             # 以下为玩家按键操作检测
             if e.type == GameEvent.move_left:
                 if self.state.type() == FSMStateEnum.Playing:
                     self.move_left()
+                    logger.info('左移.........')
             if e.type == GameEvent.move_right:
                 if self.state.type() == FSMStateEnum.Playing:
                     self.move_right()
-
-            # 不停的检测状态是否有变化
-            self.check_trans_state()
-            # 更新UI
-            self.state.update_view()
+                    logger.info('右移.........')
