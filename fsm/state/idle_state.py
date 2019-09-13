@@ -26,5 +26,5 @@ class IdleState(FSMState):
     def update_view(self):
         logger.info('更新idle视图......')
         super().update_view()
-        self.back_group.draw(self.screen)
         self.back_group.update()
+        self.back_group.draw(self.screen)

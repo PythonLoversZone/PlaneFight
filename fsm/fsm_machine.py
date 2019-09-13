@@ -71,12 +71,10 @@ class FSMMachine:
     def trans_state(self, goal_state: FSMStateEnum):
         # 如果在状态列表中找到了目标状态,并且当前状态不是目标状态则进入该状态
         if self.states.__contains__(goal_state):
-            if self.state is None:
-                self.set_state(goal_state)
-                return
             # 状态相同就不需要切换
             if self.state.type() == goal_state:
                 return
+            logger.info('状态切换为%d' % goal_state)
             self.set_state(goal_state)
 
     # 退出游戏
@@ -98,20 +96,26 @@ class FSMMachine:
     def update_machine(self):
         # 不停的检测状态是否有变化
         self.check_trans_state()
-        # 更新UI
+        # 检测事件
+        self.event_handler()
+        # 更新精录
         self.state.update_view()
+        # 更新显示
+        pygame.display.update()
 
+    # 检测事件
+    def event_handler(self):
         for e in event.get():
             # 退出游戏检测
             if e.type == GameEvent.quit:
-                self.exit_game()
                 logger.info('关闭游戏.........')
+                self.exit_game()
             # 以下为玩家按键操作检测
             if e.type == GameEvent.move_left:
                 if self.state.type() == FSMStateEnum.Playing:
-                    self.move_left()
                     logger.info('左移.........')
+                    self.move_left()
             if e.type == GameEvent.move_right:
                 if self.state.type() == FSMStateEnum.Playing:
-                    self.move_right()
                     logger.info('右移.........')
+                    self.move_right()
