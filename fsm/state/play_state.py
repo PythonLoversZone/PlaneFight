@@ -59,5 +59,5 @@ class PlayingState(FSMState):
         self.enemy_group.draw(self.screen)
 
     def enemy_enter(self):
-        enemy = Enemy()
+        enemy = Enemy(GameConfig.enemy_move_speed)
         self.enemy_group.add(enemy)

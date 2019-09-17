@@ -9,6 +9,7 @@ class GameEvent:
     idle = pygame.USEREVENT + 3
     start_game = pygame.USEREVENT + 4
     enemy_enter = pygame.USEREVENT + 5
+    enemy_ai = pygame.USEREVENT + 6
 
     # 以下为pygame内置事件
     pause_game = pygame.K_PAUSE

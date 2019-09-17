@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class Enemy(GameObject):
 
     def __init__(self, speed=1):
-        super().__init__(Resource.enemy1, GameConfig.enemy_move_speed)
+        super().__init__(Resource.enemy1, speed)
         self.rect.x = random.randint(self.rect.width, GameConfig.screen.width - self.rect.width)
         self.rect.y = -self.rect.height
 

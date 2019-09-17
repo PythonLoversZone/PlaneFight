@@ -107,8 +107,12 @@ class FSMMachine:
             if e.type == GameEvent.quit:
                 logger.info('关闭游戏.........')
                 exit_game()
+            # 敌人入场
             if e.type == GameEvent.enemy_enter:
                 self.state.enemy_enter()
+            # 敌人AI
+            if e.type == GameEvent.enemy_ai:
+                pass
 
             # 用户按下了鼠标左键
             if e.type == GameEvent.click:
