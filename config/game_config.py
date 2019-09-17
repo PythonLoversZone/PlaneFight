@@ -5,6 +5,7 @@ from pygame.rect import Rect
 
 class GameConfig:
     player_attack_speed = 0.5
+    player_move_speed = 3
     # (left,top) (width,height)
     screen = Rect((0, 0), (480, 700))
     enemy_move_speed = range(1, 3)
@@ -30,6 +31,7 @@ class Resource:
     enemy2 = 'images/enemy2.png'
     background = 'images/background.png'
     bullet = 'images/bullet'
+    pause = 'images/pause_nor.png'
 
     @staticmethod
     def create_image(image):

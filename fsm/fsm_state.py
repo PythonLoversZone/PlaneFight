@@ -5,6 +5,7 @@ from pygame.surface import Surface
 
 from fsm.ai_controller import AIController
 # 状态枚举
+from model.obj.player import Player
 from model.ui.background import Background
 from model.ui.button import Button
 
@@ -23,10 +24,16 @@ class FSMState:
 
     # 背景精灵组
     back_group = None
-    # 玩家精灵组
-    player_group = None
-    # 按钮精灵组
+    # 开始游戏按钮
     start_button: Button = None
+
+    # 玩家
+    player: Player = None
+
+    # pause
+    pause_button: Button = None
+    # 分数
+    score = None
 
     def __init__(self, screen, ai_controller) -> None:
         self.screen = screen

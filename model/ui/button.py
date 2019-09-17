@@ -17,12 +17,13 @@ class ClickType(Enum):
 class Button(GameObject):
 
     # 需要一个load的image和它应该放的位置
-    def __init__(self, image):
+    def __init__(self, image, position=None):
         # 创建按钮
         super().__init__(image, 0)
         # 位置
-        self.rect.x = (GameConfig.screen.width - self.rect.width) / 2
-        self.rect.y = (GameConfig.screen.height - self.rect.height) / 2
+        if position is None:
+            self.rect.x = (GameConfig.screen.width - self.rect.width) / 2
+            self.rect.y = (GameConfig.screen.height - self.rect.height) / 2
 
     # 默认为左单击,1为左单击,2为右单击
     def click(self, event, click_type=ClickType.left_click):

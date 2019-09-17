@@ -20,6 +20,7 @@ def start_game(fsm: FSMMachine):
 # 初始化游戏界面
 def init_game():
     pygame.init()
+    pygame.font.init()
     pygame.display.set_caption("plane fight")
     game_display = pygame.display.set_mode(GameConfig.screen.size)
     return FSMMachine(game_display)

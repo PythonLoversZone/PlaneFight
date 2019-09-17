@@ -5,6 +5,7 @@ from typing import Dict
 import pygame
 from pygame import event
 
+from config.game_config import GameConfig
 from fsm.fsm_state import FSMStateEnum, FSMState
 from fsm.state.end_state import EndState
 from fsm.state.idle_state import IdleState
@@ -15,6 +16,11 @@ from model.ui.button import ClickType
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+
+def exit_game():
+    pygame.quit()
+    sys.exit()
 
 
 class FSMMachine:
@@ -75,18 +81,11 @@ class FSMMachine:
             self.set_state(goal_state)
 
     # 退出游戏
-    def exit_game(self):
-        pygame.quit()
-        sys.exit()
-
-    # 事件处理
     def move_left(self):
-        self.state.back_group
-        logger.info('pressed d ')
+        self.state.player.rect.x -= GameConfig.player_move_speed
 
-    @staticmethod
-    def move_right():
-        logger.info('pressed a ')
+    def move_right(self):
+        self.state.player.rect.x += GameConfig.player_move_speed
 
     # 每秒60(fps)次监听玩家的动作,不同的动作转入不同的状态中去,具体的逻辑在各自的状态中处理
     def update_machine(self):
@@ -99,21 +98,33 @@ class FSMMachine:
 
     # 检测事件
     def event_handler(self):
+        # 检测事件
         for e in event.get():
             # 退出游戏检测
             if e.type == GameEvent.quit:
                 logger.info('关闭游戏.........')
-                self.exit_game()
-            # 以下为玩家按键操作检测
-            if e.type == GameEvent.move_left:
-                if self.state.type() == FSMStateEnum.Playing:
-                    logger.info('左移.........')
-                    self.move_left()
-            if e.type == GameEvent.move_right:
-                if self.state.type() == FSMStateEnum.Playing:
-                    logger.info('右移.........')
-                    self.move_right()
+                exit_game()
+            # 用户按下了鼠标左键
             if e.type == GameEvent.click:
-                if self.state.start_button.click(e, ClickType.left_click):
-                    logger.info('玩家开始了游戏....')
-                    self.trans_state(FSMStateEnum.Playing)
+                if self.state.start_button is not None:
+                    if self.state.start_button.click(e, ClickType.left_click):
+                        logger.info('玩家开始了游戏....')
+                        self.trans_state(FSMStateEnum.Playing)
+                elif self.state.pause_button is not None:
+                    # 如果是在游戏状态,则暂停游戏
+                    if self.state.pause_button.click(e, ClickType.left_click):
+                        if self.state.type() == FSMStateEnum.Playing:
+                            logger.info('玩家暂停了游戏')
+                            self.trans_state(FSMStateEnum.Pause)
+                        elif self.state.type() == FSMStateEnum.Pause:
+                            logger.info('玩家恢复了游戏')
+                            self.trans_state(FSMStateEnum.Playing)
+
+        # 以下为玩家按键操作检测
+        keys = pygame.key.get_pressed()
+        if keys[GameEvent.move_left]:
+            if self.state.type() == FSMStateEnum.Playing:
+                self.move_left()
+        elif keys[GameEvent.move_right]:
+            if self.state.type() == FSMStateEnum.Playing:
+                self.move_right()
