@@ -27,6 +27,8 @@ class FSMState:
     back_group = None
     # 开始游戏按钮
     start_button: Button = None
+    # 重新开始按钮
+    restart_button: Button = None
 
     # 玩家
     player: Player = None

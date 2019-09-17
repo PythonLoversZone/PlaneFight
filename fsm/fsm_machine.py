@@ -125,6 +125,10 @@ class FSMMachine:
                         elif self.state.type() == FSMStateEnum.Pause:
                             logger.info('玩家恢复了游戏')
                             self.trans_state(FSMStateEnum.Playing)
+                elif self.state.restart_button is not None:
+                    if self.state.type() == FSMStateEnum.End:
+                        logger.info('玩家重新开始了游戏')
+                        self.trans_state(FSMStateEnum.Playing)
 
         # 以下为玩家按键操作检测
         keys = pygame.key.get_pressed()
@@ -142,3 +146,4 @@ class FSMMachine:
         collided = pygame.sprite.spritecollide(self.state.player, self.state.enemy_group, True)
         if len(collided) > 0:
             logger.info('玩家和敌机相撞')
+            self.trans_state(FSMStateEnum.End)
