@@ -4,9 +4,7 @@ import logging
 import pygame
 
 from config.game_config import GameConfig
-from fsm.ai.idle_ai import IdleAI
 from fsm.fsm_machine import FSMMachine
-from game_event.game_event import GameEvent
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
