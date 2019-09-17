@@ -1,6 +1,7 @@
 from enum import Enum
 
 import pygame
+from pygame.sprite import Group
 from pygame.surface import Surface
 
 from fsm.ai_controller import AIController
@@ -30,6 +31,9 @@ class FSMState:
     # 玩家
     player: Player = None
 
+    # 敌机精灵组
+    enemy_group: Group = pygame.sprite.Group()
+
     # pause
     pause_button: Button = None
     # 分数
@@ -52,6 +56,9 @@ class FSMState:
         self.back_group.draw(self.screen)
 
     # ------------------------------以下方法需要子类实现------------------------------------
+    def enemy_enter(self):
+        pass
+
     # 退出当前状态
     def exit(self):
         pass

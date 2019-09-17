@@ -4,6 +4,7 @@ import pygame
 
 from config.game_config import Resource, GameConfig
 from fsm.fsm_state import FSMStateEnum, FSMState
+from model.obj.enemy import Enemy
 from model.obj.player import Player
 from model.ui.button import Button
 from model.ui.label import Label
@@ -52,3 +53,11 @@ class PlayingState(FSMState):
         self.screen.blit(self.pause_button.image, self.pause_button.rect)
         # 分数
         self.screen.blit(self.score.label, (self.score.x, self.score.y))
+
+        # 敌人
+        self.enemy_group.update()
+        self.enemy_group.draw(self.screen)
+
+    def enemy_enter(self):
+        enemy = Enemy()
+        self.enemy_group.add(enemy)

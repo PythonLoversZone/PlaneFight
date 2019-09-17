@@ -93,6 +93,9 @@ class FSMMachine:
         self.event_handler()
         # 更新精录
         self.state.update_view()
+        # 检测碰撞
+        self.check_collision()
+
         # 更新显示
         pygame.display.update()
 
@@ -104,6 +107,9 @@ class FSMMachine:
             if e.type == GameEvent.quit:
                 logger.info('关闭游戏.........')
                 exit_game()
+            if e.type == GameEvent.enemy_enter:
+                self.state.enemy_enter()
+
             # 用户按下了鼠标左键
             if e.type == GameEvent.click:
                 if self.state.start_button is not None:
@@ -128,3 +134,11 @@ class FSMMachine:
         elif keys[GameEvent.move_right]:
             if self.state.type() == FSMStateEnum.Playing:
                 self.move_right()
+
+    # 检测碰撞
+    def check_collision(self):
+        if self.state.type() != FSMStateEnum.Playing:
+            return
+        collided = pygame.sprite.spritecollide(self.state.player, self.state.enemy_group, True)
+        if len(collided) > 0:
+            logger.info('玩家和敌机相撞')

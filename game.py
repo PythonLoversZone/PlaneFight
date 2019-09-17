@@ -5,6 +5,7 @@ import pygame
 
 from config.game_config import GameConfig
 from fsm.fsm_machine import FSMMachine
+from game_event.game_event import GameEvent
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -23,6 +24,8 @@ def init_game():
     pygame.font.init()
     pygame.display.set_caption("plane fight")
     game_display = pygame.display.set_mode(GameConfig.screen.size)
+    # 敌机出场定时器
+    pygame.time.set_timer(GameEvent.enemy_enter, GameConfig.enemy_enter_speed)
     return FSMMachine(game_display)
 
 

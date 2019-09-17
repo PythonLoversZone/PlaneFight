@@ -1,14 +1,17 @@
 """游戏配置"""
+import random
+
 import pygame
 from pygame.rect import Rect
 
 
 class GameConfig:
     player_attack_speed = 0.5
+    enemy_enter_speed = random.randint(1000, 3000)
     player_move_speed = 3
     # (left,top) (width,height)
     screen = Rect((0, 0), (480, 700))
-    enemy_move_speed = range(1, 3)
+    enemy_move_speed = random.randint(1, 3)
     enemy_attack_speed = 1
     fps = 60
 
