@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 # 运行状态
 class PlayingState(FSMState):
-    player_group = None
 
     def __init__(self, screen, ai_controller):
         super().__init__(screen, ai_controller)

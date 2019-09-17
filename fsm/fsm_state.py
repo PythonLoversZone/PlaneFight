@@ -23,7 +23,9 @@ class FSMState:
 
     # 背景精灵组
     back_group = None
-
+    # 玩家精灵组
+    player_group = None
+    # 按钮精灵组
     start_button: Button = None
 
     def __init__(self, screen, ai_controller) -> None:

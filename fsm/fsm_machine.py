@@ -75,14 +75,13 @@ class FSMMachine:
             self.set_state(goal_state)
 
     # 退出游戏
-    @staticmethod
-    def exit_game():
+    def exit_game(self):
         pygame.quit()
         sys.exit()
 
     # 事件处理
-    @staticmethod
-    def move_left():
+    def move_left(self):
+        self.state.back_group
         logger.info('pressed d ')
 
     @staticmethod
