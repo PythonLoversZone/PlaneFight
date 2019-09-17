@@ -22,7 +22,7 @@ class FSMMachine:
     state: FSMState = None
 
     # screen用来更新画面,ai_controller控制画面, state用来告诉ai_controller该用什么状态
-    def __init__(self, screen, ai_controller):
+    def __init__(self, screen, ai_controller=None):
         logger.info('初始化状态机....')
         self.screen = screen
         self.controller = ai_controller

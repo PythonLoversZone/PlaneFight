@@ -24,7 +24,7 @@ def init_game():
     pygame.init()
     pygame.display.set_caption("plane fight")
     game_display = pygame.display.set_mode(GameConfig.screen.size)
-    return FSMMachine(game_display, IdleAI())
+    return FSMMachine(game_display)
 
 
 # 程序入口
